@@ -8,7 +8,6 @@ import mate.academy.model.User;
 import mate.academy.service.AuthenticationService;
 import mate.academy.service.UserService;
 import mate.academy.util.HashUtil;
-
 import java.util.Optional;
 
 @Service
@@ -18,19 +17,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
-       if (userService.emailExists(email)) {
-           Optional<User> byEmail = userService.findByEmail(email);
-           if (byEmail.isPresent()) {
-               User user = byEmail.get();
-               if (user.getPassword().equals(HashUtil.hashPassword(password,user.getSalt()))) {
-                   return user;
-               } else {
-                   throw new AuthenticationException("Password is incorrect! Try again ...");
-               }
-           }
-           throw new AuthenticationException("Incorrect login, try again");
-       }
-       throw new AuthenticationException("Incorrect login, try again , login : " + email);
+        if (userService.emailExists(email)) {
+            Optional<User> byEmail = userService.findByEmail(email);
+            if (byEmail.isPresent()) {
+                User user = byEmail.get();
+                if (user.getPassword().equals(HashUtil.hashPassword(password, user.getSalt()))) {
+                    return user;
+                } else {
+                    throw new AuthenticationException("Password is incorrect! Try again ...");
+                }
+            }
+            throw new AuthenticationException("Incorrect login, try again");
+        }
+        throw new AuthenticationException("Incorrect login, try again , login : " + email);
     }
 
     @Override
@@ -42,6 +41,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(email);
         user.setSalt(HashUtil.generateSalt());
         user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
-        return user;
+        return userService.add(user);
     }
 }

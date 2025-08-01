@@ -10,4 +10,6 @@ public interface UserDao {
     Optional<User> get(Long id);
 
     List<User> getAll();
+
+    Optional<User> findByEmail(String email);
 }
