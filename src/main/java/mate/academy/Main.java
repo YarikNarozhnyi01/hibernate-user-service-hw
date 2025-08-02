@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.exception.RegistrationException;
 import mate.academy.lib.Injector;
@@ -11,8 +13,6 @@ import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class Main {
         bob.setEmail("custom@email.com");
         bob.setPassword("qwerty");
         try {
-            authenticationService.register(bob.getEmail(), bob.getPassword());
+            bob = authenticationService.register(bob.getEmail(), bob.getPassword());
         } catch (RegistrationException e) {
             throw new RuntimeException("Can not register user Bob", e);
         }
